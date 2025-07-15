@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brick Breaker King</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #000000, #111111);
+      color: #f8f8f8;
+      height: 100%;
+      overflow: hidden;
+    }
+    #gameCanvas {
+      display: block;
+      margin: 0 auto;
+      width: 95vw;
+      max-width: 500px;
+      aspect-ratio: 5 / 6;
+      background: #0d0d0d;
+      border: 3px solid #444;
+      box-shadow: 0 0 20px #0ff;
+      touch-action: none;
+    }
+
+    #menuScreen, #levelIntro, #gameOverScreen {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      padding: 20px;
+      text-align: center;
+    }
+
+    #menuScreen { display: flex; }
+    #levelIntro h2, h1, h2 {
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff;
+      margin: 10px;
+    }
+
+    button {
+      margin: 10px;
+      padding: 14px 24px;
+      font-size: 18px;
+      border: none;
+      background: linear-gradient(145deg, #222, #444);
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #0ff;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #0ff, 0 0 5px #0ff;
+    }
+
+    #pauseBtn, #muteBtn {
+      position: fixed;
+      bottom: 12px;
+      font-size: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #222;
+      color: white;
+      z-index: 5;
+      box-shadow: 0 0 8px #0ff;
+    }
+    #pauseBtn { left: 10px; }
+    #muteBtn { right: 10px; }
+
+    #leaderboard {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 300px;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 12px 16px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #0ff inset;
+    }
+
+    #leaderboard h2 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    #leaderboardList {
+      text-align: left;
+      padding-left: 20px;
+    }
+
+    @media (max-width: 768px) {
+      button {
+        font-size: 16px;
+        padding: 12px 20px;
+      }
+      #pauseBtn, #muteBtn {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+      }
+      h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="menuScreen">
+    <h1>Brick Breaker King</h1>
+    <button onclick="startGame()">▶ Start Game</button>
+    <button id="resetBtn">♻ Reset Leaderboard</button>
+    <div id="leaderboard">
+      <h2>🏆 Leaderboard</h2>
+      <ol id="leaderboardList"></ol>
+    </div>
+  </div>
+
+  <div id="levelIntro"><h2 id="levelText"></h2></div>
+
+  <div id="gameOverScreen">
+    <h2>Game Over</h2>
+    <p id="finalScoreText"></p>
+    <button onclick="startGame()">🔁 Play Again</button>
+    <button onclick="returnToMenu()">🏠 Main Menu</button>
+  </div>
+
+  <canvas id="gameCanvas" width="500" height="600"></canvas>
+
+  <button id="pauseBtn">⏸</button>
+  <button id="muteBtn">🔊</button>
+
+  <!-- 🔊 Game Sounds -->
+  <audio id="bgMusic" src="pleasant-awakening-353825.mp3" loop preload="auto"></audio>
+  <audio id="sfxHit" src="hammer-hitting-a-head-100624.mp3" preload="auto"></audio>
+  <audio id="sfxBoss" src="bitty-boss-54953.mp3" preload="auto"></audio>
+  <audio id="sfxPower" src="power-up-game-sound-effect-359227.mp3" preload="auto"></audio>
+  <audio id="sfxShoot" src="069321_light-machine-gun-m249-39814.mp3" preload="auto"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
